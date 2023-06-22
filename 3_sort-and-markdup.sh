@@ -58,7 +58,7 @@ echo "[sort-and-markdup]: Filtering, sorting, and marking read duplicates for $s
 samtools view -q 10 -O bam "${sampleName}.bam" | \
 	samtools sort -@ 10 -O bam | \
 	java -jar $EBROOTPICARD/picard.jar MarkDuplicates \
-	O="${outDir}/{sampleName}.qced.sorted.markdup.bam" \
-	M="${outDir}/{sampleName}_marked_dup_metrics.txt" 
+	O="${outDir}/${sampleName}.qced.sorted.markdup.bam" \
+	M="${outDir}/${sampleName}_marked_dup_metrics.txt" 
 
 echo "[sort-and-markdup]: ...done!"
