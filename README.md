@@ -8,7 +8,8 @@ Email:		ecg@well.ox.ac.uk
 ## Overview
 
 This repository contains a collection of codes to process methylation data using the TET-assisted pyridine borane sequencing (TAPS) method.
-Codes are based on the analysis pipeline previously published in Science Advances (), and were developped with assistance from Masato Ioue (masato.inoue@linacre.ox.ac.uk) and Dr Chunxiao-Song.
+
+These codes are based on the analytical approach previously published in Science Advances (https://www.science.org/doi/10.1126/sciadv.abh0534), and were developped with assistance from Masato Inoue (masato.inoue@linacre.ox.ac.uk) and Dr Chunxiao-Song.
 
 
 ## Repository structure
