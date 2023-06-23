@@ -55,7 +55,7 @@ sampleName=$(echo ${sampleList[$((${SLURM_ARRAY_TASK_ID}-1))]} | sed 's/\n//g')
 ## Running BWA
 echo "[sort-and-markdup]: Filtering, sorting, and marking read duplicates for $sampleName..."
 
-samtools view -q 10 -O bam "${sampleName}.bam" | \
+samtools view -q 10 -O bam "${sampleName}.sam" | \
 	samtools sort -@ 10 -O bam | \
 	java -jar $EBROOTPICARD/picard.jar MarkDuplicates \
 	O="${outDir}/${sampleName}.qced.sorted.markdup.bam" \
