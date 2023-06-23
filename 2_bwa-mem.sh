@@ -59,6 +59,6 @@ bwa mem \
 	-I 500,120,1000,20 \
 	$referenceGenome \
 	"${sampleName}_1_val_1.fq.gz" \
-	"${sampleName}_2_val_2.fq.gz" > "${outDir}/${sampleName}.bam"
+	"${sampleName}_2_val_2.fq.gz" > "${outDir}/${sampleName}.sam"
 
 echo "[bwa-mem]: ...done!"
