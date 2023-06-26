@@ -8,7 +8,7 @@
 
 #SBATCH -e /well/jknight/users/awo868/logs/TAPS-pipeline/sort-and-markdup_%j.err 
 #SBATCH -p long 
-#SBATCH -c 5
+#SBATCH -c 6
 
 # Outputing relevant information on how the job was run
 echo "------------------------------------------------" 
@@ -43,7 +43,7 @@ readarray sampleList < $1
 outDir=$2
 
 ## Loading BWA module
-echo "[bwa-mem]:	Loading modules..."
+echo "[sort-and-markdup]:	Loading modules..."
 module load Java/11.0.2
 module load samtools/1.8-gcc5.4.0
 module load picard/2.23.0-Java-11
@@ -53,12 +53,28 @@ module load picard/2.23.0-Java-11
 sampleName=$(echo ${sampleList[$((${SLURM_ARRAY_TASK_ID}-1))]} | sed 's/\n//g')
 
 ## Running BWA
-echo "[sort-and-markdup]: Filtering, sorting, and marking read duplicates for $sampleName..."
+echo "[sort-and-markdup]: Filtering and sorting $sampleName alignment..."
 
-samtools view -q 10 -O bam "${sampleName}.sam" | \
-	samtools sort -@ 10 -O bam | \
-	java -jar $EBROOTPICARD/picard.jar MarkDuplicates \
+if [[ ! -d tmp ]]
+then
+	mkdir tmp
+fi
+
+samtools view -h -q 10 "${sampleName}.sam" | \
+	samtools sort -@ 10 -O bam > "./tmp/${sampleName}.bam"
+
+
+echo "[sort-and-markdup]: Marking read duplicates..."
+
+java -jar $EBROOTPICARD/picard.jar MarkDuplicates \
+	I="./tmp/${sampleName}.bam" \
 	O="${outDir}/${sampleName}.qced.sorted.markdup.bam" \
 	M="${outDir}/${sampleName}_marked_dup_metrics.txt" 
+
+
+echo "[sort-and-markdup]: Cleaning up..."
+
+rm "./tmp/${sampleName}.bam"
+
 
 echo "[sort-and-markdup]: ...done!"
