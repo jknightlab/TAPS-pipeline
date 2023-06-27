@@ -58,7 +58,7 @@ eval "$(conda shell.bash hook)"
 conda activate methylDackel
 
 ## Defining path variables
-rreferenceGenome='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/cfDNA-methylation_04-2023/results/TAPS-pipeline/methyl-dackel/reference-genome/GRCh38-reference_with-spike-in-sequences.fasta.gz'
+referenceGenome='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/cfDNA-methylation_04-2023/results/TAPS-pipeline/methyl-dackel/reference-genome/GRCh38-reference_with-spike-in-sequences.fasta.gz'
 
 # Per-task processing 
 ## Defining input and output names
@@ -67,7 +67,7 @@ sampleName=$(echo ${sampleList[$((${SLURM_ARRAY_TASK_ID}-1))]} | sed 's/\n//g')
 ## Running MethylDackel
 echo "[methyl-dackel]:	Calling methylation events with MethylDackel ($sampleName)..."
 
-if [[ outputType == 'bedGraph' ]]
+if [[ $outputType == 'bedGraph' ]]
 then
 	echo "[methyl-dackel]:	Output set to 'bedGraph'..."
 	MethylDackel extract \
@@ -82,7 +82,7 @@ then
 		"${sampleName}.qced.sorted.markdup.bam"
 fi
 
-if [[ outputType == 'methylKit' ]]
+if [[ $outputType == 'methylKit' ]]
 then
 	echo "[methyl-dackel]:	Output set to 'methylKit'..."
 	MethylDackel extract \
@@ -97,5 +97,5 @@ then
 		"${sampleName}.qced.sorted.markdup.bam"
 fi
 
-echo "[methyl-dackel]: ...done!"
+echo "[methyl-dackel]: 	...done!"
 
