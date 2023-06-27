@@ -21,6 +21,7 @@ The codes contained within this repository are written in bash and ordered as fo
  |-- 1_trim-galore.sh			Adapter trimming and read clipping with TrimGalore! (i.e. cutadapt, followed by FastQC quality assessment)
  |-- 2_bwa-mem.sh			Alignment of reads to the reference genome using bwa mem
  |-- 3_sort_and_markdup.sh		Quality filtering and sorting of mapped reads with samtools, followed by marking of duplicated reads by picard
- `-- 4_methyl-dackel.sh			Calling of methylation events using methylDackel
+ |-- 4_mbias-plot.sh			Methylation bias assessment with methylDackel (used to define read clipping parameters)
+ `-- 5_methyl-dackel.sh			Calling of methylation events using methylDackel
 ```
 
