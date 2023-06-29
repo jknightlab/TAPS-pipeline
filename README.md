@@ -22,6 +22,8 @@ The codes contained within this repository are written in bash and ordered as fo
  |-- 2_bwa-mem.sh			Alignment of reads to the reference genome using bwa mem
  |-- 3_sort_and_markdup.sh		Quality filtering and sorting of mapped reads with samtools, followed by marking of duplicated reads by picard
  |-- 4_mbias-plot.sh			Methylation bias assessment with methylDackel (used to define read clipping parameters)
- `-- 5_methyl-dackel.sh			Calling of methylation events using methylDackel
+ |-- 5_methyl-dackel.sh			Calling of methylation events using methylDackel
+ |-- 6_make-bigwig.sh			Creates bigWig files based on the bedGraph outpurs from methylDackel
+ `-- 7_get-mapping-stats.sh		Computes summary statistics for the performance of the BWA MEM alignment step (e.g. insert sizes, mapping rates, and genome coverage)
 ```
 
