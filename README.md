@@ -24,6 +24,7 @@ The codes contained within this repository are written in bash and ordered as fo
  |-- 4_mbias-plot.sh			Methylation bias assessment with methylDackel (used to define read clipping parameters)
  |-- 5_methyl-dackel.sh			Calling of methylation events using methylDackel
  |-- 6_make-bigwig.sh			Creates bigWig files based on the bedGraph outpurs from methylDackel
- `-- 7_get-mapping-stats.sh		Computes summary statistics for the performance of the BWA MEM alignment step (e.g. insert sizes, mapping rates, and genome coverage)
+ |-- 7_get-mapping-stats.sh		Computes summary statistics for the performance of the BWA MEM alignment step (e.g. insert sizes, mapping rates, and genome coverage)
+ `-- 8_remove-problematic-regions.sh	Removes CpGs overlapping centromeres, gaps, ENCODE blacklisted regions and common SNPs from methylKit files
 ```
 
