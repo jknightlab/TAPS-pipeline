@@ -58,10 +58,10 @@ echo "[remove-problematic-regions]:       Removing centromeres, blacklisted regi
 cat "${sampleName}_CpG.methylKit" | \
 	awk '{print $2"\t"$3"\t"$3+1"\t"$4"\t"$5"\t"$6"\t"$7"\t"$1}' | \
 	tail -n +2 | \
-	/well/jknight/users/awo868/software/bedtools subtract -a stdin -b "${referenceGenomeDir}/blacklisted-regions/centromeres_grch38.bed" | \
-	/well/jknight/users/awo868/software/bedtools subtract -a stdin -b "${referenceGenomeDir}/blacklisted-regions/blacklisted-regions_encode_grch38.bed" | \
-	/well/jknight/users/awo868/software/bedtools subtract -a stdin -b "${referenceGenomeDir}/blacklisted-regions/gaps_grch38.bed" | \
-	/well/jknight/users/awo868/software/bedtools subtract -a stdin -b "${referenceGenomeDir}/blacklisted-regions/common-snps_dbsnp-v151_grch38.bed" \
+	/well/jknight/users/awo868/software/bedtools subtract -A -a stdin -b "${referenceGenomeDir}/blacklisted-regions/centromeres_grch38.bed" | \
+	/well/jknight/users/awo868/software/bedtools subtract -A -a stdin -b "${referenceGenomeDir}/blacklisted-regions/blacklisted-regions_encode_grch38.bed" | \
+	/well/jknight/users/awo868/software/bedtools subtract -A -a stdin -b "${referenceGenomeDir}/blacklisted-regions/gaps_grch38.bed" | \
+	/well/jknight/users/awo868/software/bedtools subtract -A -a stdin -b "${referenceGenomeDir}/blacklisted-regions/common-snps_dbsnp-v151_grch38.bed" \
 	> "${outDir}/tmp/${sampleName}_CpG.qced.methylKit"
 
 echo "[remove-problematic-regions]:       Flipping methylation calls to map TAPS chemistry..."	
