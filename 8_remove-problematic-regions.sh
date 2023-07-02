@@ -49,7 +49,7 @@ referenceGenomeDir='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/c
 sampleName=$(echo ${sampleList[$((${SLURM_ARRAY_TASK_ID}-1))]} | sed 's/\n//g')
 echo "[remove-problematic-regions]:       Processing sample $sampleName..."	
 
-if [[ ! -d "${outDir}tmp" ]]
+if [[ ! -d "${outDir}/tmp" ]]
 then
         mkdir "${outDir}/tmp"
 fi
@@ -66,9 +66,16 @@ cat "${sampleName}_CpG.methylKit" | \
 
 echo "[remove-problematic-regions]:       Flipping methylation calls to map TAPS chemistry..."	
 cat "${outDir}/tmp/${sampleName}_CpG.qced.methylKit" | \
-	awk '{print $8"\t"$1"\t"$2"\t"$4"\t"$5"\t"$7"\t"$6}' > "${outDir}/${sampleName}_CpG.qced.flipped.methylKit"
+	awk '{print $8"\t"$1"\t"$2"\t"$4"\t"$5"\t"$7"\t"$6}' > \
+	"${outDir}/tmp/${sampleName}_CpG.qced.flipped.methylKit"
 	
+echo "[remove-problematic-regions]:       Adding file header..."
+echo -e "chrBase\tchr\tbase\tstrand\tcoverage\tfreqC\tfreqT" | \
+	cat - "${outDir}/tmp/${sampleName}_CpG.qced.flipped.methylKit" \
+	> "${outDir}/${sampleName}_CpG.qced.flipped.methylKit"
+
 echo "[remove-problematic-regions]:       Cleaning up..."	
 rm "${outDir}/tmp/${sampleName}_CpG.qced.methylKit"
+rm "${outDir}/tmp/${sampleName}_CpG.qced.flipped.methylKit"
 
 echo "[remove-problematic-regions]:       ...done!"
