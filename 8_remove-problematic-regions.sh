@@ -7,7 +7,7 @@
 #SBATCH -o /well/jknight/users/awo868/logs/TAPS-pipeline/remove-problematic-regions_%j.out 
 #SBATCH -e /well/jknight/users/awo868/logs/TAPS-pipeline/remove_problematic-regions_%j.err 
 
-#SBATCH -p long 
+#SBATCH -p short 
 #SBATCH -c 2
 
 # Outputing relevant information on how the job was run
@@ -61,7 +61,8 @@ cat "${sampleName}_CpG.methylKit" | \
 	/well/jknight/users/awo868/software/bedtools subtract -A -a stdin -b "${referenceGenomeDir}/blacklisted-regions/centromeres_grch38.bed" | \
 	/well/jknight/users/awo868/software/bedtools subtract -A -a stdin -b "${referenceGenomeDir}/blacklisted-regions/blacklisted-regions_encode_grch38.bed" | \
 	/well/jknight/users/awo868/software/bedtools subtract -A -a stdin -b "${referenceGenomeDir}/blacklisted-regions/gaps_grch38.bed" | \
-	/well/jknight/users/awo868/software/bedtools subtract -A -a stdin -b "${referenceGenomeDir}/blacklisted-regions/common-snps_dbsnp-v155_grch38.bed" \
+	/well/jknight/users/awo868/software/bedtools subtract -A -a stdin -b "${referenceGenomeDir}/blacklisted-regions/common-snps_dbsnp-v155_grch38.bed" | \
+	/well/jknight/users/awo868/software/bedtools subtract -A -a stdin -b "${referenceGenomeDir}/blacklisted-regions/repeat-masker_grch38.bed" \
 	> "${outDir}/tmp/${sampleName}_CpG.qced.methylKit"
 
 echo "[remove-problematic-regions]:       Flipping methylation calls to map TAPS chemistry..."	
