@@ -7,7 +7,7 @@
 #SBATCH -o /well/jknight/users/awo868/logs/TAPS-pipeline/get-mapping-stats_%j.out 
 #SBATCH -e /well/jknight/users/awo868/logs/TAPS-pipeline/get-mapping-stats_%j.err 
 
-#SBATCH -p long 
+#SBATCH -p short
 #SBATCH -c 4
 
 # Outputing relevant information on how the job was run
