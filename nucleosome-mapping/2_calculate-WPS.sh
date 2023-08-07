@@ -5,13 +5,13 @@
 ##########################################################################################
 # Specifying Slurm parameters for job submission
 #SBATCH -A jknight.prj 
-#SBATCH -J make-pats
+#SBATCH -J WPS
 
 #SBATCH -o /well/jknight/users/awo868/logs/TAPS-pipeline/calculate-WPS_%j.out 
 #SBATCH -e /well/jknight/users/awo868/logs/TAPS-pipeline/calculate-WPS_%j.err 
 
-#SBATCH -p long
-#SBATCH -c 6
+#SBATCH -p short
+#SBATCH -c 3
 
 # Outputing relevant information on how the job was run
 echo "------------------------------------------------" 
@@ -29,34 +29,35 @@ echo ""
 # Setting default parameter values
 min_frag_size=120
 max_frag_size=200
-region_file='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/cfDNA-methylation_04-2023/data/reference-genome/sliding-windows/sliding-windows-around-TSSs_k-120.bed'
+region_file='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/cfDNA-methylation_04-2023/data/reference-genome/sliding-windows/sliding-windows-around-TSSs_k-120.bed.gz'
 input_dir=$PWD
 output_dir=$PWD
+sample_list_path='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/cfDNA-methylation_04-2023/data/sample-list.txt'
 
 # Reading in arguments
-while getopts ":m:M:r:i:o:s:" option; 
+while getopts m:M:r:i:o:s:h opt 
 do
-	case $option in
-	m | --min_frag_size)
+	case $opt in
+	m)
 		min_frag_size="$OPTARG"
 		;;
-	M | --max_frag_size)
+	M)
 		max_frag_size="$OPTARG"
 		;;
-	r | --region_file)
+	r)
 		region_file="$OPTARG"
 		;;
-	i | --input_dir)
+	i)
 		input_dir="$OPTARG"
 		;;	
-	o | --output_dir)
+	o)
 		output_dir="$OPTARG"
 		;;
-	s | --sample_list)
+	s)
 		sample_list_path="$OPTARG"
 		;;
-	*)
-		echo "Usage: $0 [-m min_frag_size] [-M max_frag_size] [-r region_file] [-o output_dir] [-s sample_list]"
+	h)
+		echo "Usage:	calculate-WPS.sh [-m min_frag_size] [-M max_frag_size] [-r region_file] [-o output_dir] [-s sample_list]"
 		exit 1
 		;;
 	esac
@@ -103,25 +104,26 @@ echo "[calculate-WPS]:	Processing sample ${sampleName}..."
 
 ## Filtering fragments by size
 echo "[calculate-WPS]:	Filtering fragments by length..."
-cat "${input_dir}/${sampleName}_cfDNA-end-motifs_GRCh38.tsv frag-coords.bed" | \
-	awk -F '\t' '$4 > $min_frag_size && $4 < $max_frag_size {print}' | \
-	awk '{print $1"\t"$2"\t"$3}' \
-	> "${output_dir}/tmp/${sampleName}_selected-fragments.bed"
+zcat "${input_dir}/${sampleName}_cfDNA-end-motifs_GRCh38.tsv.gz" | \
+	awk -F '\t' '$4 > '$min_frag_size' && $4 < '$max_frag_size' {print}' | \
+	awk '{print $1"\t"$2"\t"$3}' | \
+	gzip \
+	> "${output_dir}/tmp/${sampleName}_selected-fragments.bed.gz"
 
 # Finding reads overlapping each sliding window
 ## All overlaps
 echo "[calculate-WPS]:	Quantifying all overlaps with the regions of interest..."
 /well/jknight/users/awo868/software/bedtools intersect \
-	-a $slidingWindows \
-	-b "${output_dir}/tmp/${sampleName}_selected-fragments.bed" \
+	-a "${region_file}" \
+	-b "${output_dir}/tmp/${sampleName}_selected-fragments.bed.gz" \
 	-c \
 	> "${output_dir}/tmp/${sampleName}_all-overlaps.bed"
 
 ## Complete overlaps only
 echo "[calculate-WPS]:	Quantifying any complete overlaps with the regions of interest..."
 /well/jknight/users/awo868/software/bedtools intersect \
-	-a $slidingWindows \
-	-b "${output_dir}/tmp/${sampleName}_selected-fragments.bed" \
+	-a "${region_file}" \
+	-b "${output_dir}/tmp/${sampleName}_selected-fragments.bed.gz" \
 	-f 1 \
 	-c \
 	> "${output_dir}/tmp/${sampleName}_complete-overlaps.bed"
@@ -131,17 +133,19 @@ echo "[calculate-WPS]:	Quantifying any complete overlaps with the regions of int
 echo "[calculate-WPS]:	Computing WPS per region..."
 paste "${output_dir}/tmp/${sampleName}_all-overlaps.bed" \
 	"${output_dir}/tmp/${sampleName}_complete-overlaps.bed" | \
-	awk '{print $1"\t"$2"\t"$3"\t"$8"\t"$4-$8}' \
+	awk '{print $1"\t"$2"\t"$3"\t"$8"\t"$4-$8}' | \
+	gzip \
 	> "${output_dir}/tmp/${sampleName}_overlap-counts.bed"
 
 ## Calculating WPS
-cat "${output_dir}/tmp/${sampleName}_overlap-counts.bed" | \
-	awk '{print $1"\t"($2+$3)/2"\t"$4-$5}' \
-	> "${output_dir}/${sampleName}_WPS.bed"
+zcat "${output_dir}/tmp/${sampleName}_overlap-counts.bed" | \
+	awk '{print $1"\t"($2+$3)/2"\t"$4-$5}' | \
+	gzip \
+	> "${output_dir}/${sampleName}_WPS.bed.gz"
 
 # Cleaning up
 echo "[calculate-WPS]:	Cleaning up..."
-rm "${output_dir}/tmp/${sampleName}_.*$"
+find  "${output_dir}/tmp/" -name "${sampleName}*" -exec rm {} \;
 
 echo "[calculate-WPS]:	...done!"
 

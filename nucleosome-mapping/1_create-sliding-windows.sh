@@ -33,26 +33,26 @@ output_dir=$PWD
 gene_coords='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/cfDNA-methylation_04-2023/data/functional-annotations/gencode-v43_grch38.bed'
 
 # Reading in arguments
-while getopts ":r:w:s:o:" option; 
+while getopts r:w:s:o:g:h opt
 do
-	case $option in
+	case $opt in
 	r)
-		region_size="$OPTARG"
+		region_size=$OPTARG
 		;;
 	w)
-		window_size="$OPTARG"
+		window_size=$OPTARG
 		;;
 	s)
-		step_size="$OPTARG"
+		step_size=$OPTARG
 		;;
 	o)
-		output_dir="$OPTARG"
+		output_dir=$OPTARG
 		;;
 	g)
-		gene_coords="$OPTARG"
+		gene_coords=$OPTARG
 		;;
-	*)
-		echo "Usage: $0 [-r region_size] [-w window_size] [-s step_size] [-o output_dir] [-g gene_coords]"
+	h)
+		echo "Usage:	create-sliding-windows.sh [-r region_size] [-w window_size] [-s step_size] [-o output_dir] [-g gene_coords]"
 		exit 1
 		;;
 	esac
@@ -94,8 +94,12 @@ echo "[slide-windows]:	Sliding regions with a $window_size bp window and $step_s
 /well/jknight/users/awo868/software/bedtools makewindows \
 	-b "${output_dir}/TSS-region-file_$(($region_size/1000))kb.bed" \
 	-w $window_size \
-	-s $step_size \
-	> "${output_dir}/sliding-windows-around-TSSs_k-120.bed"
+	-s $step_size | \
+	awk -F '\t' '$3 - $2 == '$window_size' {print}' | \
+	sort -k 1,1 -k2,2n | \
+	uniq | \
+	gzip \
+	> "${output_dir}/sliding-windows-around-TSSs_k-${window_size}.bed.gz"
 	
 echo "[slide-windows]:	...done!"
 
