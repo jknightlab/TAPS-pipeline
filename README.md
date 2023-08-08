@@ -29,7 +29,7 @@ The codes contained within this repository correspond to the main data processin
 ```
 
 
-## Repository subdirectories (supplementary analyses)
+## Supplementary analyses
 
 Each of the subdirectories within this repository contains a collection of scripts used to perform separate pieces of analysis on TAPS data. These comprise:
 
