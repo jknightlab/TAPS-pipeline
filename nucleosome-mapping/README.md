@@ -13,7 +13,7 @@ To do so, 5 kb windows centred at the TSS are constructed for each transcript in
 
 Fragmentomic information (i.e. fragment sizes for each paired-end read) is first used to identify mononucleosomal cfDNA fragments (i.e. 120 - 200 bp). Next, the intersection between these fragments and each sliding window is quantified.
 
-Nucleosome positioning is finally inferred using windowed protection scores (WPS), an approach proposed by Snyder et al. (https://doi.org/10.1016/j.cell.2015.11.05). In brief, the WPS of a window is defined as the number of cfDNA fragments completely encompassing that region minus the number of cfDNA fragments with breakpoints (i.e. beginning or end sites) within the same region. High WPS values indicate a region is protected from nuclease cutting, which indicates a nucleosome is positioned on it. Low WPS values indicate higher nuclease cutting rates, which suggest the genomic position in question is not bound by a nucleosome.
+Nucleosome positioning is finally inferred using windowed protection scores (WPS), an approach proposed by Snyder et al. (https://doi.org/10.1016/j.cell.2015.11.050). In brief, the WPS of a window is defined as the number of cfDNA fragments completely encompassing that region minus the number of cfDNA fragments with breakpoints (i.e. beginning or end sites) within the same region. High WPS values indicate a region is protected from nuclease cutting, which indicates a nucleosome is positioned on it. Low WPS values indicate higher nuclease cutting rates, which suggest the genomic position in question is not bound by a nucleosome.
 
 
 
