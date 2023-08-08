@@ -14,7 +14,7 @@ These codes are based on the analytical approach previously published in Science
 
 ## Repository structure
 
-The codes contained within this repository are written in bash and ordered as follows:
+The codes contained within this repository correspond to the main data processing steps followed. They are written in bash and ordered as follows:
 
 ```
 ./
@@ -28,3 +28,14 @@ The codes contained within this repository are written in bash and ordered as fo
  `-- 8_remove-problematic-regions.sh	Removes CpGs overlapping centromeres, gaps, ENCODE blacklisted regions, repetitive regions (repeatMAsker) and common SNPs from methylKit files
 ```
 
+### Repository subdirectories (supplementary analyses)
+
+Each of the subdirectories within this repository contains a collection of scripts used to perform separate pieces of analysis on TAPS data. These comprise:
+
+**identity_check:**		Scripts used to assess the extent of genotype sharing between sequencing files. These scripts were used to identify any potential sample swaps or cross-contaminations during data generation.
+
+**tissue_deconvolution:**	Scripts used to estimate the proportional contribution of different tissues to the cfDNA pool. These scripts perform deconvolution based on methylation patterns at CpG sites known to be hyper- or hypomethylated in a tissue specific manner.
+
+**fragmentomics_analysis:**	Scripts used to recover fragment length and fragment end-motif information for all cfDNA molecules sequenced.
+
+**nucleosome_mapping:**		Scripts used to calculate windowed protection scores (WPS) and thus identify the likely position of nucleosomes at TSS regions
