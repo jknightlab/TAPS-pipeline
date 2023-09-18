@@ -112,7 +112,8 @@ for(i in gene_list$gene_name){
 			gene_name,
 			chr,
 			relative_pos =  pos - gene_TSS,
-			WPS
+			WPS,
+			WPS_adj = WPS - mean(WPS)
 		) %>%
 		arrange(relative_pos)
 
@@ -124,19 +125,12 @@ for(i in gene_list$gene_name){
 			gene_name,
 			chr,
 			relative_pos =  gene_TSS - pos,
-			WPS
+			WPS,
+			WPS_adj = WPS - mean(WPS)
 		) %>%
 		arrange(relative_pos)
 
 	}
-
-	# Adjusting WPS to a mean of zero across each 1 kb genomic tile
-	region_wps$WPS_adj <- NA
-	region_wps$WPS_adj[region_wps$relative_pos <= -1500] <- region_wps$WPS[region_wps$relative_pos <= -1500] - mean(region_wps$WPS[region_wps$relative_pos <= -1500])
-	region_wps$WPS_adj[region_wps$relative_pos > -1500 & region_wps$relative_pos <= -500] <- region_wps$WPS[region_wps$relative_pos > -1500 & region_wps$relative_pos <= -500] - mean(region_wps$WPS[region_wps$relative_pos > -1500 & region_wps$relative_pos <= -500])
-	region_wps$WPS_adj[region_wps$relative_pos > -500 & region_wps$relative_pos <= 500] <- region_wps$WPS[region_wps$relative_pos > -500 & region_wps$relative_pos <= 500] - mean(region_wps$WPS[region_wps$relative_pos > -500 & region_wps$relative_pos <= 500])
-	region_wps$WPS_adj[region_wps$relative_pos > 500 & region_wps$relative_pos <= 1500] <- region_wps$WPS[region_wps$relative_pos > 500 & region_wps$relative_pos <= 1500] - mean(region_wps$WPS[region_wps$relative_pos > 500 & region_wps$relative_pos <= 1500])
-	region_wps$WPS_adj[region_wps$relative_pos > 1500 & region_wps$relative_pos <= 2500] <- region_wps$WPS[region_wps$relative_pos > 1500 & region_wps$relative_pos <= 2500] - mean(region_wps$WPS[region_wps$relative_pos > 1500 & region_wps$relative_pos <= 2500])
 
 	WPS_per_gene <- rbind(WPS_per_gene, region_wps)
 
@@ -160,7 +154,7 @@ cat("[fetch-WPS-per-gene.R]:	Estimating peak WPS vwithin 500 bp of each TSS...\n
 peak_WPS_per_gene <- WPS_per_gene %>%
 	filter(relative_pos >= -500 & relative_pos <= 500) %>%
 	group_by(gene_name) %>%
-	summarise(peak_WPS = max(WPS))
+	summarise(WPS_range = max(WPS_adj) - min(WPS_adj))
 
 # Exporting results
 cat("[fetch-WPS-per-gene.R]:	Exporting results as TSV files...\n")
@@ -194,7 +188,7 @@ write.table(
 
 write.table(
 	peak_WPS_per_gene,
-	file = paste0(file_name_root,"peak-WPS-per-gene_adjusted.tsv"),
+	file = paste0(file_name_root,"WPS-amplitude-per-gene_adjusted.tsv"),
 	sep = "\t",
 	quote = F,
 	row.names = F
