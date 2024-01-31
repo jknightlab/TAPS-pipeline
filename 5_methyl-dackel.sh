@@ -17,7 +17,7 @@
 # Setting default parameter values
 input_dir=$PWD
 output_dir=$PWD
-referenceGenome='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/cfDNA-methylation_04-2023/results/TAPS-pipeline/methyl-dackel/reference-genome/GRCh38-reference_with-spike-in-sequences.fasta.gz'
+reference_genome='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/cfDNA-methylation_04-2023/results/TAPS-pipeline/methyl-dackel/reference-genome/GRCh38-reference_with-spike-in-sequences.fasta.gz'
 output_format='methylKit'
 
 # Reading in arguments
@@ -40,7 +40,7 @@ do
 		output_format=$OPTARG
 		;;
 	h)
-		echo "Usage:	methyl-dackel.sh [-i input_dir] [-o output_dir] [-s sample_list_path] [-g reference_genome_path]  [-f output_format]"
+		echo "Usage:	methyl-dackel.sh [-i input_dir] [-o output_dir] [-s sample_list_path] [-g reference_genome]  [-f output_format]"
 		echo ""
 		echo "Where:"
 		echo "-i		Path to input directory containing sorted BAM files for for methylation bias estimation [defaults to the working directory]"
@@ -129,7 +129,7 @@ then
 		-o "${output_dir}/${sampleName}" \
 		--OT 5,135,5,115 \
 		--OB 20,145,35,145 \
-		$referenceGenome \
+		$reference_genome \
 		"${input_dir}/${sampleName}.qced.sorted.markdup.bam"
 fi
 
@@ -144,7 +144,7 @@ then
 		-o "${output_dir}/${sampleName}" \
 		--OT 5,135,5,115 \
 		--OB 20,145,35,145 \
-		$referenceGenome \
+		$reference_genome \
 		"${input_dir}/${sampleName}.qced.sorted.markdup.bam"
 fi
 
