@@ -106,7 +106,7 @@ conda activate methylDackel
 
 # Parsing input file
 echo "[methyl-dackel]:	Reading sample list..."
-readarray sampleList < $1
+readarray sampleList < $sample_list_path
 
 ## Loading required modules and virtual environments
 echo "[methyl-dackel]:	Loading required modules..."

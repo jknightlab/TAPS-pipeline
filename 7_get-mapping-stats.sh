@@ -7,9 +7,9 @@
 #SBATCH -A jknight.prj 
 #SBATCH -J mapstats
 
-#SBATCH -o /well/jknight/users/awo868/logs/TAPS-pipeline/get-mapping-stats%j.out 
+#SBATCH -o /well/jknight/users/awo868/logs/TAPS-pipeline/get-mapping-stats_%j.out 
+#SBATCH -e /well/jknight/users/awo868/logs/TAPS-pipeline/get-mapping-stats_%j.err 
 
-#SBATCH -e /well/jknight/users/awo868/logs/TAPS-pipeline/get-mapping-stats%j.err 
 #SBATCH -p short 
 #SBATCH -c 4
 ##########################################################################################
@@ -84,7 +84,7 @@ module load samtools/1.8-gcc5.4.0
 
 # Parsing input file
 echo "[mapping-stats]:       Reading sample list..."
-readarray sampleList < $1
+readarray sampleList < $sample_list_path
 
 ## Creating output directories
 echo "[mapping-stats]:	Setting up output directory structure..."
