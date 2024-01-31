@@ -17,8 +17,6 @@
 # Setting default parameter values
 input_dir=$PWD
 output_dir=$PWD
-referenceGenome='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/cfDNA-methylation_04-2023/results/TAPS-pipeline/methyl-dackel/reference-genome/GRCh38-reference_with-spike-in-sequences.fasta.gz'
-output_format='methylKit'
 
 # Reading in arguments
 while getopts r:w:s:o:g:h opt
