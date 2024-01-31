@@ -21,7 +21,7 @@ referenceGenome='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/cfDN
 output_format='methylKit'
 
 # Reading in arguments
-while getopts r:w:s:o:g:h opt
+while getopts i:o:s:g:f:h opt
 do
 	case $opt in
 	i)
@@ -47,7 +47,7 @@ do
 		echo "-o		Path to output directory where to store methylation bias plots [defaults to the working directory]"
 		echo "-s		Path to a text file containing a list of samples (one sample per line). Sample names should match file naming patterns."
 		echo "-g		Path to the reference genome file to be used (in FASTA format) [defaults to the human GRCh38 reference genome with added TAPS-specific spike-in sequences]"
-		echo "-f		Type of output format required. This must be either 'bedGraph' or 'methylKit' [defaults to methylKit]"
+		echo "-t		Type of output format required. This must be either 'bedGraph' or 'methylKit' [defaults to methylKit]"
 		echo ""
 		exit 1
 		;;

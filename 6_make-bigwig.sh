@@ -20,7 +20,7 @@ output_dir=$PWD
 chrom_sizes_path='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/cfDNA-methylation_04-2023/results/TAPS-pipeline/methyl-dackel/reference-genome/GRCh38-reference_with-spike-in-sequences.chrom.sizes'
 
 # Reading in arguments
-while getopts r:w:s:o:g:h opt
+while getopts i:o:s:c:h opt
 do
 	case $opt in
 	i)

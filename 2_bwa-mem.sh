@@ -20,7 +20,7 @@ output_dir=$PWD
 reference_genome='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/cfDNA-methylation_04-2023/results/TAPS-pipeline/bwa-mem/reference-genome/GRCh38-reference_with-spike-in-sequences.fasta.gz'
 
 # Reading in arguments
-while getopts r:w:s:o:g:h opt
+while getopts i:o:s:g:h opt
 do
 	case $opt in
 	i)
