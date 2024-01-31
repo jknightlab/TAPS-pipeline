@@ -5,11 +5,11 @@
 ##########################################################################################
 # Specifying Slurm parameters for job submission
 #SBATCH -A jknight.prj 
-#SBATCH -J mrkdup
+#SBATCH -J mbias
 
-#SBATCH -o /well/jknight/users/awo868/logs/TAPS-pipeline/sort-and-markdup_%j.out 
+#SBATCH -o /well/jknight/users/awo868/logs/TAPS-pipeline/mbias_%j.out 
 
-#SBATCH -e /well/jknight/users/awo868/logs/TAPS-pipeline/sort-and-markdup_%j.err 
+#SBATCH -e /well/jknight/users/awo868/logs/TAPS-pipeline/mbias_%j.err 
 #SBATCH -p long 
 #SBATCH -c 6
 ##########################################################################################
