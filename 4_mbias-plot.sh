@@ -17,7 +17,7 @@
 # Setting default parameter values
 input_dir=$PWD
 output_dir=$PWD
-referenceGenome='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/cfDNA-methylation_04-2023/results/TAPS-pipeline/methyl-dackel/reference-genome/GRCh38-reference_with-spike-in-sequences.fasta.gz'
+reference_genome='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/cfDNA-methylation_04-2023/results/TAPS-pipeline/methyl-dackel/reference-genome/GRCh38-reference_with-spike-in-sequences.fasta.gz'
 
 # Reading in arguments
 while getopts i:o:s:g:h opt
@@ -70,6 +70,12 @@ then
         exit 2
 fi
 
+if [[ ! -f $reference_genome ]]
+then
+        echo "[mbias-plot]:	ERROR: Reference genome file not found"
+        exit 2
+fi
+
 # Outputing relevant information on how the job was run
 echo "------------------------------------------------" 
 echo "Run on host: "`hostname` 
@@ -97,7 +103,7 @@ sampleName=$(echo ${sampleList[$((${SLURM_ARRAY_TASK_ID}-1))]} | sed 's/\n//g')
 # Running MethylDackel's methylation bias estimation function
 echo "[mbias-plot]:	Checking for methylation bias with MethylDackel ($sampleName)..."
 MethylDackel mbias \
-	$referenceGenome \
+	$reference_genome \
 	"${input_dir}/${sampleName}.qced.sorted.markdup.bam" \
 	"${output_dir}/${sampleName}"
 
