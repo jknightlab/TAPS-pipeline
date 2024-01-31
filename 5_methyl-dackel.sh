@@ -40,7 +40,7 @@ do
 		output_format=$OPTARG
 		;;
 	h)
-		echo "Usage:	methyl-dackel.sh [-i input_dir] [-o output_dir] [-s sample_list_path] [-g reference_genome_path]"
+		echo "Usage:	methyl-dackel.sh [-i input_dir] [-o output_dir] [-s sample_list_path] [-g reference_genome_path]  [-f output_format]"
 		echo ""
 		echo "Where:"
 		echo "-i		Path to input directory containing sorted BAM files for for methylation bias estimation [defaults to the working directory]"
