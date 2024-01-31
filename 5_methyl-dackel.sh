@@ -11,7 +11,7 @@
 
 #SBATCH -e /well/jknight/users/awo868/logs/TAPS-pipeline/methyldackel_%j.err 
 #SBATCH -p long 
-#SBATCH -c 6
+#SBATCH -c 8
 ##########################################################################################
 
 # Setting default parameter values
