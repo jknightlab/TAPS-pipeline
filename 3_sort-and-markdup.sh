@@ -105,6 +105,6 @@ java -jar $EBROOTPICARD/picard.jar MarkDuplicates \
 
 # Removing intermediary files
 echo "[sort-and-markdup]: Cleaning up..."
-rm "./tmp/${sampleName}.bam"
+rm "${output_dir}/tmp/${sampleName}.bam"
 
 echo "[sort-and-markdup]: ...done!"
