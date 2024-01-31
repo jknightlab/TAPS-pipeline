@@ -1,14 +1,71 @@
 #!/usr/bin/bash
 
-## Author:      Eddie Cano-Gamez (ecg@well.ox.ac.uk)
+## Author:	Kiki Cano-Gamez (kiki.canogamez@well.ox.ac.uk)
 
 ##########################################################################################
 # Specifying Slurm parameters for job submission
-#SBATCH -o /well/jknight/users/awo868/logs/TAPS-pipeline/get-mapping-stats_%j.out 
-#SBATCH -e /well/jknight/users/awo868/logs/TAPS-pipeline/get-mapping-stats_%j.err 
+#SBATCH -A jknight.prj 
+#SBATCH -J mapstats
 
-#SBATCH -p short
+#SBATCH -o /well/jknight/users/awo868/logs/TAPS-pipeline/get-mapping-stats%j.out 
+
+#SBATCH -e /well/jknight/users/awo868/logs/TAPS-pipeline/get-mapping-stats%j.err 
+#SBATCH -p short 
 #SBATCH -c 4
+##########################################################################################
+
+# Setting default parameter values
+input_dir=$PWD
+output_dir=$PWD
+referenceGenome='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/cfDNA-methylation_04-2023/results/TAPS-pipeline/methyl-dackel/reference-genome/GRCh38-reference_with-spike-in-sequences.fasta.gz'
+output_format='methylKit'
+
+# Reading in arguments
+while getopts r:w:s:o:g:h opt
+do
+	case $opt in
+	i)
+		input_dir=$OPTARG
+		;;
+	o)
+		output_dir=$OPTARG
+		;;
+	s)
+		sample_list_path=$OPTARG
+		;;
+	h)
+		echo "Usage:	get-mapping-stats.sh [-i input_dir] [-o output_dir] [-s sample_list_path]"
+		echo ""
+		echo "Where:"
+		echo "-i		Path to input directory containing sorted BAM files for for methylation bias estimation [defaults to the working directory]"
+		echo "-o		Path to output directory where to store methylation bias plots [defaults to the working directory]"
+		echo "-s		Path to a text file containing a list of samples (one sample per line). Sample names should match file naming patterns."
+		echo ""
+		exit 1
+		;;
+	esac
+done
+
+# Validating arguments
+echo "[mapping-stats]:	Validating arguments..."
+
+if [[ ! -d $input_dir ]]
+then
+		echo "[mapping-stats]:	ERROR: Input directory not found."
+		exit 2
+fi 
+
+if [[ ! -d $output_dir ]]
+then
+		echo "[mapping-stats]:	ERROR: Output directory not found."
+        exit 2
+fi 
+
+if [[ ! -f $sample_list_path ]]
+then
+        echo "[mapping-stats]:	ERROR: Sample list file not found"
+        exit 2
+fi
 
 # Outputing relevant information on how the job was run
 echo "------------------------------------------------" 
@@ -19,73 +76,51 @@ echo "Started at: "`date`
 echo "Executing task ${SLURM_ARRAY_TASK_ID} of job ${SLURM_ARRAY_JOB_ID} "
 echo "------------------------------------------------" 
 
-
-##########################################################################################
-# General processing
-## Reading in arguments
-echo "===== TAPS pipeline: Generating read mapping statistics based on BWA MEM outputs ====="
-echo ""
-echo "[mapping-stats]:       Validating arguments..."
-if [[ ! -f $1 ]]
-then
-        echo "[mapping-stats]:       ERROR: Sample list file not found."
-        exit 2
-fi
-
-if [[ ! -d $2 ]]
-then
-        echo "[mapping-stats]:       ERROR: Output directory not found."
-        exit 2
-fi 
-
-echo "[mapping-stats]:       Reading sample list..."
-readarray sampleList < $1
-outDir=$2
-
 ## Loading required modules
 echo "[mapping-stats]:	Loading modules..."
 module load Java/11.0.2
 module load picard/2.23.0-Java-11
 module load samtools/1.8-gcc5.4.0
 
+# Parsing input file
+echo "[mapping-stats]:       Reading sample list..."
+readarray sampleList < $1
+
 ## Creating output directories
 echo "[mapping-stats]:	Setting up output directory structure..."
-if [[ ! -d "${outDir}/mapping-stats" ]]
+if [[ ! -d "${output_dir}/mapping-stats" ]]
 then
-        mkdir "${outDir}/mapping-stats"
+        mkdir "${output_dir}/mapping-stats"
 fi
 
-if [[ ! -d "${outDir}/insert-sizes" ]]
+if [[ ! -d "${output_dir}/insert-sizes" ]]
 then
-        mkdir "${outDir}/insert-sizes"
+        mkdir "${output_dir}/insert-sizes"
 fi
 
-if [[ ! -d "${outDir}/genome-coverage" ]]
+if [[ ! -d "${output_dir}/genome-coverage" ]]
 then
-        mkdir "${outDir}/genome-coverage"
+        mkdir "${output_dir}/genome-coverage"
 fi
 
-
-# Per-task processing 
-## Defining input and output names
+#  Parallelising process by sample
 sampleName=$(echo ${sampleList[$((${SLURM_ARRAY_TASK_ID}-1))]} | sed 's/\n//g')
 echo "[mapping-stats]:       Processing sample $sampleName..."	
 
 echo "[mapping-stats]:       Computing mapping statistics with samtools..."	
-samtools stats -d "${sampleName}.qced.sorted.markdup.bam" > "${outDir}/mapping-stats/${sampleName}_mapping-statistics.txt"
+samtools stats -d "${input_dir}/${sampleName}.qced.sorted.markdup.bam" > "${output_dir}/mapping-stats/${sampleName}_mapping-statistics.txt"
 
 
 echo "[mapping-stats]:       Checking insert size distirbution with picard..."	
 java -jar $EBROOTPICARD/picard.jar CollectInsertSizeMetrics \
-	I="${sampleName}.qced.sorted.markdup.bam" \
-    O="${outDir}/insert-sizes/${sampleName}_insert_size_metrics.txt" \
-    H="${outDir}/insert-sizes/${sampleName}_insert_size_histogram.pdf" \
+	I="${input_dir}/${sampleName}.qced.sorted.markdup.bam" \
+    O="${output_dir}/insert-sizes/${sampleName}_insert_size_metrics.txt" \
+    H="${output_dir}/insert-sizes/${sampleName}_insert_size_histogram.pdf" \
     M=0.5
 
 echo "[mapping-stats]:       Computing genome coverage with BEDtools..."	
 /well/jknight/users/awo868/software/bedtools genomecov \
-	-ibam "${sampleName}.qced.sorted.markdup.bam" \
-	> "${outDir}/genome-coverage/${sampleName}_genome-coverage.txt"
+	-ibam "${input_dir}/${sampleName}.qced.sorted.markdup.bam" \
+	> "${output_dir}/genome-coverage/${sampleName}_genome-coverage.txt"
 
 echo "[mapping-stats]:       ...done!"	
-
