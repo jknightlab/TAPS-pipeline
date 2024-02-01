@@ -114,7 +114,7 @@ java -jar $EBROOTPICARD/picard.jar CollectInsertSizeMetrics \
 	I="${input_dir}/${sampleName}.qced.sorted.markdup.bam" \
     O="${output_dir}/insert-sizes/${sampleName}_insert_size_metrics.txt" \
     H="${output_dir}/insert-sizes/${sampleName}_insert_size_histogram.pdf" \
-    M=0.001
+    M=0.0001
 
 echo "[mapping-stats]:       Computing genome coverage with BEDtools..."	
 /well/jknight/users/awo868/software/bedtools genomecov \
