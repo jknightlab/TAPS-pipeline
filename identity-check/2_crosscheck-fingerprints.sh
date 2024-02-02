@@ -87,11 +87,11 @@ fi
 
 # Merging BAM files
 echo "[check-identity]:		Merging BAM files..."	
-samtools merge -@ 12 "${output_dir}/tmp/merged_RG.bam" "${input_dir}/*.qced.sorted.markdup.RG.bam"
+samtools merge -@ 12 ${output_dir}/tmp/merged_RG.bam ${input_dir}/*.qced.sorted.markdup.RG.bam
 
 echo "[check-identity]:		Cross-checking fingerprints..."	
 java -jar $EBROOTPICARD/picard.jar CrosscheckFingerprints \
-	INPUT="${output_dir}/tmp/merged_RG.bam" \
+	INPUT=${output_dir}/tmp/merged_RG.bam \
 	HAPLOTYPE_MAP="$fingerprint_map" \
 	NUM_THREADS=4 \
 	OUTPUT="${output_dir}/crosscheck-metrics.txt" \
@@ -100,8 +100,8 @@ java -jar $EBROOTPICARD/picard.jar CrosscheckFingerprints \
 if [[ -f "${output_dir}/crosscheck-metrics.txt" ]]
 then
 	echo "[check-identity]:		Cleaning up..."
-	rm "${input_dir}/*.qced.sorted.markdup.RG.bam"
-	rm "${output_dir}/tmp/merged_RG.bam"
+	rm ${input_dir}/*.qced.sorted.markdup.RG.bam
+	rm ${output_dir}/tmp/merged_RG.bam
 	
 	echo "[check-identity]:		...done!"	
 fi
