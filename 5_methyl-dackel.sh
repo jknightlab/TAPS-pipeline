@@ -108,10 +108,6 @@ conda activate methylDackel
 echo "[methyl-dackel]:	Reading sample list..."
 readarray sampleList < $sample_list_path
 
-## Loading required modules and virtual environments
-echo "[methyl-dackel]:	Loading required modules..."
-module load Anaconda3/2022.05
-
 #  Parallelising process by sample
 sampleName=$(echo ${sampleList[$((${SLURM_ARRAY_TASK_ID}-1))]} | sed 's/\n//g')
 
