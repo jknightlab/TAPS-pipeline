@@ -47,7 +47,7 @@ readarray sampleList < $1
 outDir=$2
 
 # Defining path variables
-twoBitReference='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/cfDNA-methylation_04-2023/data/reference-genome/twoBit/GRCh38-reference_with-spike-in-sequences.2bit'
+twoBitReference='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/TAPS/resources/reference-genome/twoBit/GRCh38-reference_with-spike-in-sequences.2bit'
 
 # Per-task processing 
 ## Defining input names
