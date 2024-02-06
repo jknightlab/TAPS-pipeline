@@ -19,7 +19,7 @@
 # Setting default parameter values
 input_dir=$PWD
 output_dir=$PWD
-fingerprint_map='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/cfDNA-methylation_04-2023/results/TAPS-pipeline/bwa-mem/reference-genome/hg38_chr.map'
+fingerprint_map='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/TAPS/resources/reference-genome/bwa-mem/hg38_chr.map'
 
 # Reading in arguments
 while getopts i:o:f:h opt
