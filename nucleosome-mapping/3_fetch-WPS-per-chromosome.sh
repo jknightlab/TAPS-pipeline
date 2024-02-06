@@ -71,7 +71,7 @@ echo "[fetch-WPS]:	Loading required modules..."
 module load R/4.0.0-foss-2020a R-bundle-Bioconductor/3.11-foss-2020a-R-4.0.0
 
 #  Running analysis in parallel for each chromosome
-pathToScript='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/cfDNA-methylation_04-2023/analysis/TAPS-pipeline/nucleosome-mapping/fetch-WPS-per-gene.R'
+pathToScript='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/TAPS/analysis/TAPS-pipeline/nucleosome-mapping/fetch-WPS-per-gene.R'
 fileName=""
 
 echo "[calculate-WPS]:	Parallelising by chromosome..."

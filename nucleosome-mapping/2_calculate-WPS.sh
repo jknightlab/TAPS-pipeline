@@ -29,10 +29,9 @@ echo ""
 # Setting default parameter values
 min_frag_size=120
 max_frag_size=200
-region_file='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/cfDNA-methylation_04-2023/data/reference-genome/sliding-windows/sliding-windows-around-TSSs_k-120.bed.gz'
+region_file='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/TAPS/resources/reference-genome/sliding-windows-around-TSSs_k-120.bed.gz'
 input_dir=$PWD
 output_dir=$PWD
-sample_list_path='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/cfDNA-methylation_04-2023/data/sample-list.txt'
 
 # Reading in arguments
 while getopts m:M:r:i:o:s:h opt 

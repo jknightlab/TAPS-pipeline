@@ -30,7 +30,7 @@ region_size=5000
 window_size=120
 step_size=1
 output_dir=$PWD
-gene_coords='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/cfDNA-methylation_04-2023/data/functional-annotations/gencode-v43_grch38.bed'
+gene_coords='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/TAPS/resources/functional-annotations/gencode-v43_grch38.bed'
 
 # Reading in arguments
 while getopts r:w:s:o:g:h opt
