@@ -5,8 +5,8 @@ library(pheatmap)
 library(matrixStats)
 
 # Load data
-tissue_atlas_full <- read_csv("./data/methylation-tissue-atlas/Moss-et-al_2018/full_atlas.csv.gz")
-tissue_atlas_reduced <- read_csv("./data/methylation-tissue-atlas/Moss-et-al_2018/reference_atlas.csv")
+tissue_atlas_full <- read_csv("/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/TAPS/resources/methylation-atlases/Moss-et-al_2018/full_atlas.csv.gz")
+tissue_atlas_reduced <- read_csv("./well/jknight/projects/sepsis-immunomics/cfDNA-methylation/TAPS/resources/methylation-atlases/Moss-et-al_2018/reference_atlas.csv")
 Infinium_methyl_mat <- read_csv("./results/methylKit-R/methylation-matrices/SI-cfDNA_methylation-percentage-per-CpG_matched-to-illumina-probes_mincov-1.csv")
 
 colnames(tissue_atlas_full)[1] <- "CpGs"
@@ -65,4 +65,4 @@ ggplot(pca_coords, aes(x=PC1, y=PC2)) +
   theme_classic()
 
 # Exporting corrected atlas as CSV file
-write.table(tissue_atlas_BC, "./data/methylation-tissue-atlas/Moss-et-al_2018/reference_atlas_batch-corrected.csv", row.names = F, quote = F, sep=",")
+write.table(tissue_atlas_BC, "/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/TAPS/resources/methylation-atlases/Moss-et-al_2018/reference_atlas_batch-corrected.csv", row.names = F, quote = F, sep=",")

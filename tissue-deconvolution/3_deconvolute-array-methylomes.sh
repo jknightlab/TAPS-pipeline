@@ -55,7 +55,7 @@ inputFile=$1
 referenceAtlas=$2
 outDir=$3
 
-deconvolvePath='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/cfDNA-methylation_04-2023/data/methylation-tissue-atlas/Moss-et-al_2018/deconvolve.py'
+deconvolvePath='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/TAPS/resources/methylation-atlases/Moss-et-al_2018/deconvolve.py'
 
 # Deconvoluting data
 echo "[deconvolute-methylomes]:	Running deconvolution analysis..."

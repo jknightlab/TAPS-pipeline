@@ -9,13 +9,13 @@ meth_obj <- readRDS("./results/methylKit-R/methylKit-objects/SI-cfDNA_methylatio
 
 ## Annotations for Illumina 450K/EPIC array probes
 Infinium_array_anns <- readGeneric(
-  "./data/Illumina-array-coordinates/Infinium-array_probe-annotations_all-gens-without-duplicates.bed",
+  "/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/TAPS/resources/illumina-array-coordinates/Infinium-array_probe-annotations_all-gens-without-duplicates.bed",
   meta.cols = list(name=4)
   )
 
 ## Methylation tissue atlas published by Moss et al.
-tissue_atlas_full <- read_csv("./data/methylation-tissue-atlas/Moss-et-al_2018/full_atlas.csv.gz")
-tissue_atlas_reduced <- read_csv("./data/methylation-tissue-atlas/Moss-et-al_2018/reference_atlas.csv")
+tissue_atlas_full <- read_csv("/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/TAPS/resources/methylation-atlases/Moss-et-al_2018/full_atlas.csv.gz")
+tissue_atlas_reduced <- read_csv("/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/TAPS/resources/methylation-atlases/Moss-et-al_2018/reference_atlas.csv")
 
 colnames(tissue_atlas_full)[1] <- "CpGs"
 
