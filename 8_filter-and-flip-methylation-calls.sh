@@ -17,7 +17,7 @@
 # Setting default parameter values
 input_dir=$PWD
 output_dir=$PWD
-regions_directory='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/cfDNA-methylation_04-2023/results/TAPS-pipeline/methyl-dackel/reference-genome/blacklisted-regions'
+regions_directory='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/TAPS/resources/blacklisted-genomic-regions'
 
 # Reading in arguments
 while getopts i:o:s:r:h opt

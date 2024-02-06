@@ -93,7 +93,7 @@ module load FastQC/0.11.9-Java-11
 module load cutadapt/2.10-GCCcore-9.3.0-Python-3.8.2
 
 # Defining path variables
-trimGalore='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/cfDNA-methylation_04-2023/analysis/software/TrimGalore-0.6.10/trim_galore'
+trimGalore='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/TAPS/analysis/software/TrimGalore-0.6.10/trim_galore'
 
 # Running command
 echo "[trim-galore]:	Running TrimGalore! for sample ${sampleName}..."

@@ -17,7 +17,7 @@
 # Setting default parameter values
 input_dir=$PWD
 output_dir=$PWD
-reference_genome='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/cfDNA-methylation_04-2023/results/TAPS-pipeline/bwa-mem/reference-genome/GRCh38-reference_with-spike-in-sequences.fasta.gz'
+reference_genome='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/TAPS/resources/reference-genome/bwa-mem/GRCh38-reference_with-spike-in-sequences.fasta.gz'
 
 # Reading in arguments
 while getopts i:o:s:g:h opt

@@ -17,7 +17,7 @@
 # Setting default parameter values
 input_dir=$PWD
 output_dir=$PWD
-chrom_sizes_path='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/cfDNA-methylation_04-2023/results/TAPS-pipeline/methyl-dackel/reference-genome/GRCh38-reference_with-spike-in-sequences.chrom.sizes'
+chrom_sizes_path='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/TAPS/resources/chromsizes/GRCh38-reference_with-spike-in-sequences.chrom.sizes'
 
 # Reading in arguments
 while getopts i:o:s:c:h opt
@@ -108,7 +108,7 @@ echo "[make-bigwig]:       Creating bigWig file..."
 /well/jknight/users/awo868/software/ucsc/bedGraphToBigWig \
 	"${output_dir}/tmp/${sampleName}_CpG.tmp.sorted.bedGraph" \
 	$chrom_sizes_path \
-	"${output_dir}/${sampleName}_CpG.bw"
+	"${output_dir}/${sampleName}_CpG.flipped.bw"
 
 echo "[make-bigwig]:       Cleaning up..."	
 rm "${output_dir}/tmp/${sampleName}_CpG.tmp.bedGraph" "${output_dir}/tmp/${sampleName}_CpG.tmp.sorted.bedGraph"
