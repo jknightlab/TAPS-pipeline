@@ -12,15 +12,7 @@
 
 #SBATCH -p short
 #SBATCH -c 3
-
-# Outputing relevant information on how the job was run
-echo "------------------------------------------------" 
-echo "Run on host: "`hostname` 
-echo "Operating system: "`uname -s` 
-echo "Username: "`whoami` 
-echo "Started at: "`date` 
-echo "Executing task ${SLURM_ARRAY_TASK_ID} of job ${SLURM_ARRAY_JOB_ID} "
-echo "------------------------------------------------" 
+##############################################################################
 
 ## Reading in arguments
 echo "===== Calculating windowed protection scores (WPS) for a set of genomic regions ====="
@@ -29,7 +21,7 @@ echo ""
 # Setting default parameter values
 min_frag_size=120
 max_frag_size=200
-region_file='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/TAPS/resources/reference-genome/sliding-windows-around-TSSs_k-120.bed.gz'
+region_file='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/TAPS/resources/reference-genome/sliding-windows/sliding-windows-around-TSSs_k-120.bed.gz'
 input_dir=$PWD
 output_dir=$PWD
 
@@ -57,6 +49,15 @@ do
 		;;
 	h)
 		echo "Usage:	calculate-WPS.sh [-m min_frag_size] [-M max_frag_size] [-r region_file] [-o output_dir] [-s sample_list]"
+		echo ""
+		echo "Where:"
+		echo "-i		Path to input directory containing end-motif files (as outputted from code 3 in the fragmentomics-analysis section of this repository) [defaults to the working directory]"
+		echo "-o		Path to output directory where to write final BED files [defaults to the working directory]"
+		echo "-s		Path to a text file containing a list of samples (one sample per line). Sample names should match file naming patterns."
+		echo "-m		Minimum fragment length. Fragments shorter than this value will be discarded from analysis [defaults to 120 bp (i.e. mononucleosomes)]"
+		echo "-M		Maximum fragment length. Fragments longer than this value will be discarded from analysis [defaults to 200 bp (i.e. mononucleosomes)]"
+		echo "-r		Path to a region file, containing a list of genomic regions for which to calcualte windowed protection scores (WPS) [defaults to a region file derived using code 1 in this repository]"
+		echo ""
 		exit 1
 		;;
 	esac
@@ -80,6 +81,15 @@ then
         echo "[calculate-WPS]:	ERROR: Output directory not found."
         exit 2
 fi 
+
+# Outputing relevant information on how the job was run
+echo "------------------------------------------------"
+echo "Run on host: "`hostname`
+echo "Operating system: "`uname -s`
+echo "Username: "`whoami`
+echo "Started at: "`date`    
+echo "Executing task ${SLURM_ARRAY_TASK_ID} of job ${SLURM_ARRAY_JOB_ID} "
+echo "------------------------------------------------" 
 
 echo "[calculate-WPS]:	Reading sample list..."
 readarray sampleList < $sample_list_path
