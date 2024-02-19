@@ -44,7 +44,7 @@ WPS <- read_tsv(
 
 cat("[fetch-WPS-per-gene.R]:	Retrieving gene annotations...\n")
 TSS_anns <- fread(
-	file="/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/cfDNA-methylation_04-2023/data/functional-annotations/gencode-v43_grch38.bed",
+	file="/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/TAPS/resources/functional-annotations/gencode-v43_grch38.bed",
 	sep = "\t", 
 	select = c(4,1,2,6),
 	col.names = c("transcript_id","chr","tss","strand")
