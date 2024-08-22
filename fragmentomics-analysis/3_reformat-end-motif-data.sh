@@ -6,7 +6,7 @@
 # Specifying Slurm parameters for job submission
 
 #SBATCH -A jknight.prj 
-#SBATCH -J mapping-stats
+#SBATCH -J reformat-end-motifs
 
 #SBATCH -o /well/jknight/users/awo868/logs/TAPS-pipeline/format-end-motifs.%j.out 
 #SBATCH -e /well/jknight/users/awo868/logs/TAPS-pipeline/format-end-motifs.%j.err 
