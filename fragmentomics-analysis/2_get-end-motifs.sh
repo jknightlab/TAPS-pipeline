@@ -104,7 +104,8 @@ echo "[end-motifs]:	Fetching 5' fragment end motifs for top strand ($sampleName)
 	stdout | \
 	awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' | \
 	grep -v '^>' | \
-	cut -c-4 \
+	cut -c-4 | \
+	sed '/^$/d' \
 	> "${output_dir}/${sampleName}_5-prime-end-motifs_top-strand.tsv"
 	
 echo "[end-motifs]:	Fetching 5' fragment end motifs for bottom strand ($sampleName)..."
