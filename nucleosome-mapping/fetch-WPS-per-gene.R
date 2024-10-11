@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
 cat("\n\n====	Fetching WPS scores at genomic windows centred at genes' TSS	====\n")
-cat("Author:	Eddie Cano-Gamez <ecg@well.ox.ac.uk>\n\n")
+cat("Author:	Kiki Cano-Gamez <kiki.canogamez@well.ox.ac.uk>\n\n")
 
 # Parsing arguments
 option_list <- list(

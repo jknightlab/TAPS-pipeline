@@ -1,8 +1,8 @@
 # Mapping of nucleosome positions around genes using cfDNA
 
-Author:		Eddie Cano-Gamez
+Author:		Kiki Cano-Gamez
 
-Email:		ecg@well.ox.ac.uk
+Email:		kiki.canogamez@well.ox.ac.uk
 
 
 ## Overview
