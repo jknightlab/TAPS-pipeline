@@ -68,7 +68,7 @@ echo "[fetch-WPS]:		- Output directory: $output_dir"
 
 # Loading required modules
 echo "[fetch-WPS]:	Loading required modules..."
-module load R/4.0.0-foss-2020a R-bundle-Bioconductor/3.11-foss-2020a-R-4.0.0
+module load R/4.3.2-gfbf-2023a R-bundle-Bioconductor/3.18-foss-2023a-R-4.3.2
 
 #  Running analysis in parallel for each chromosome
 pathToScript='/well/jknight/projects/sepsis-immunomics/cfDNA-methylation/TAPS/analysis/TAPS-pipeline/nucleosome-mapping/fetch-WPS-per-gene.R'
