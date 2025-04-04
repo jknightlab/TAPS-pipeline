@@ -89,7 +89,8 @@ echo "------------------------------------------------"
 # Loading required module
 echo "[bwa-mem]:	Loading modules..."
 module load BWA/0.7.17-GCC-9.3.0
-module load samtools/1.8-gcc5.4.0
+module load SAMtools/1.18-GCC-12.3.0
+#module load samtools/1.8-gcc5.4.0
 
 # Passing input file
 echo "[bwa-mem]:	Reading sample list..."
